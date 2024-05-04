@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BubbleSort versi CRUD</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgb(0, 255, 123);
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgb(7, 252, 170);
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2f2114;
+        }
+        .code {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-left: 5px solid rgb(0, 255, 42); 
+            background-color: #000000; 
+            color: #ffffff;
+            overflow-x: auto;
+        }
+        .code pre {
+            margin: 0;
+            padding: 0;
+            white-space: pre-wrap;
+            tab-size: 4; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bubble-Sort versi CRUD</h1>
+        <div class="code">
+            <pre><code>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BubbleSort_2dimensi_versi_CRUD
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Assalamualaikum haloo sayankk, mari belajar bubblesort versi CRUD yokk!");
+            Console.WriteLine("jadi aku mau ajarin kamu, gimana sih konsep bubblesort itu?");
+            Console.WriteLine("nahh jadii aku buatkan kamu codingan ini untuk menjelaskan apa itu bubblesort");
+            Console.WriteLine("aku akan membuatkan versi CRUD agar lebih gampang, eitss ini hasil aku belajar lohh");
+            Console.WriteLine("");
+            Console.WriteLine("jadii pertama-tama masukkan elemen Arraynya di tiap baris Elemen");
+            Console.WriteLine("Masukkan jumlah elemen array: ");
+            int BarisArray = int.Parse(Console.ReadLine());
+            int[] Array = new int[BarisArray];
+            for (int i = 0; i < BarisArray; i++)
+            {
+                Console.WriteLine($"Masukkan elemen ke-{i + 1}:");
+                Array[i] = int.Parse(Console.ReadLine());
+            }
+            while (true)
+            {
+                Console.WriteLine("");
+                Console.WriteLine("ini menunyaa:");
+                Console.WriteLine("1. Urutkan Array (otomatis)");
+                Console.WriteLine("2. Tukar Posisi Elemen");
+                Console.WriteLine("3. Tambahkan Elemen ke dalam Indeks baru");
+                Console.WriteLine("4. Keluar");
+                Console.WriteLine("Silakan di pilih yaww dengan cara inputkan sesuai nomernya (1, 2, 3 atau 4) (>///<): ");
+                string InputanUser = Console.ReadLine();
+                Console.WriteLine("");
+                switch (InputanUser)
+                {
+                    case "1":
+                        BubbleSort(Array, 0, Array.Length - 1);
+                        TampilkanArray("Mantappu JIWA!, ini adalah Array setalah diurutkan: ", Array);
+                        break;
+                    case "2":
+                        int IndeksPertama, IndeksTerakhir;
+                        PilihdanTukarkan(out IndeksPertama, out IndeksTerakhir);
+
+                        if (IndeksValidnya(Array, IndeksPertama) && IndeksValidnya(Array, IndeksPertama))
+                        {
+                            TukarElemen(Array, IndeksPertama, IndeksTerakhir);
+                            TampilkanArray("kerenn, kamu telah menukarkan posisi Elemen Arraynyaa, berikut Array setelah ditukarkan: ", Array);
+                        }
+                        else
+                        {
+                            Console.WriteLine("yahh input kamu tidak valid, coba lagi yaww");
+                        }
+                        break;
+                    case "3":
+                        int NilaiBaru;
+                        Console.WriteLine("kamu mau masukkin nilai baru, silakann berapa nilai yang kamu mau untuk ditambahkan?: ");
+                        NilaiBaru = int.Parse(Console.ReadLine());
+
+                        Array = TambahkanElemen(Array, NilaiBaru);
+                        TampilkanArray("WAHH nilai yang bagus, ini adalah Array sekarang.. setelah kamu tambahkan tadi: ", Array);
+                        break;
+                    case "4":
+                        return;
+                    default:
+                        Console.WriteLine("yahh pilihan kamu tidak valid:(, tapi gapapa coba lagi yukk!");
+                        break;
+                }
+            }
+        }
+        static void BubbleSort(int[] Array, int IndeksPertama, int IndeksTerakhir)
+        {
+            bool Tukarkan;
+            do
+            {
+                Tukarkan = false;
+                for (int i = IndeksPertama; i < IndeksTerakhir; i++)
+                {
+                    if (Array[i] > Array[i + 1])
+                    {
+                        TukarElemen(Array, i, i + 1);
+                        Tukarkan = true;
+                    }
+                }
+            } while (Tukarkan);
+        }
+        static bool Urutkan(int[] Array, int IndeksPertama, int IndeksTerakhir)
+        {
+            if (IndeksPertama > IndeksTerakhir)
+            {
+                int TempatBarisElemen = IndeksPertama;
+                IndeksPertama = IndeksTerakhir;
+                IndeksTerakhir = TempatBarisElemen;
+            }
+            for (int i = IndeksPertama; i < IndeksTerakhir; i++)
+            {
+                if (Array[i] > Array[i + 1])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        static void TampilkanArray(string Pesan, int[] Array)
+        {
+            Console.WriteLine(Pesan);
+            foreach (int Angka in Array)
+            {
+                Console.Write(Angka + " ");
+            }
+            Console.WriteLine();
+        }
+        static void TukarElemen(int[] Array, int i, int j)
+        {
+            int TempatBarisElemen = Array[i];
+            Array[i] = Array[j];
+            Array[j] = TempatBarisElemen;
+        }
+        static bool IndeksValidnya(int[] Array, int index)
+        {
+            if (index >= 0 && index < Array.Length)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        static void PilihdanTukarkan(out int IndeksPertama, out int IndeksTerakhir)
+        {
+            Console.WriteLine("Masukkan indeks awalnya yaa dimulai dari angka 0 (karena indeks 0 adalah baris elemen pertamanya): ");
+            IndeksPertama = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Masukkan indeks akhirnya jugaa: ");
+            IndeksTerakhir = int.Parse(Console.ReadLine());
+        }
+        static int[] TambahkanElemen(int[] Array, int NilaiBaru)
+        {
+            int[] ArrayBaru = new int[Array.Length + 1];
+            Array.CopyTo(ArrayBaru, 0);
+            ArrayBaru[Array.Length] = NilaiBaru;
+            return ArrayBaru;
+        }
+    }
+}
+</code></pre>
+        </div>
+        </div>
+</body>
+</html>
